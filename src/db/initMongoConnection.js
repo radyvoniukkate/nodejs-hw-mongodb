@@ -1,6 +1,6 @@
-// src/db/initMongoConnection.js
+
 const mongoose = require('mongoose');
-require('dotenv').config(); // Завантажуємо змінні оточення з .env
+require('dotenv').config();
 
 const initMongoConnection = async () => {
   try {
@@ -12,7 +12,7 @@ const initMongoConnection = async () => {
     console.log('Mongo connection successfully established!');
   } catch (error) {
     console.error('Failed to connect to MongoDB', error);
-    throw error; // Пробрасываем ошибку, чтобы обработать в index.js
+    throw error; 
   }
 };
 

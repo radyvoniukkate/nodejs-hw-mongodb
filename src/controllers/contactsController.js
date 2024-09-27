@@ -1,7 +1,7 @@
 const {
   getAllContacts,
   getContactByIdService,
-} = require('../services/contacts'); // Імпортуємо сервіс
+} = require('../services/contacts'); 
 
 const getContacts = async (req, res) => {
   try {

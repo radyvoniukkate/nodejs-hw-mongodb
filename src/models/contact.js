@@ -12,7 +12,7 @@ const contactSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      default: null, // Можна задати значення за замовчуванням
+      default: null, 
     },
     isFavourite: {
       type: Boolean,
@@ -26,7 +26,7 @@ const contactSchema = new mongoose.Schema(
     },
   },
   { timestamps: true }
-); // Автоматично додати createdAt та updatedAt
+); 
 
 const Contact = mongoose.model('Contact', contactSchema);
 

@@ -4,7 +4,7 @@ const pino = require('pino-http')();
 const {
   getContacts,
   getContactById,
-} = require('./controllers/contactsController'); // Імпортуємо контролери
+} = require('./controllers/contactsController'); 
 const contactsRouter = require('./routes/contacts');
 
 const setupServer = () => {
@@ -17,7 +17,7 @@ const setupServer = () => {
 
   app.use('/contacts', contactsRouter);
 
-  // Обробка неіснуючих роутів
+  
   app.use((req, res) => {
     res.status(404).json({ message: 'Not found' });
   });
@@ -27,5 +27,4 @@ const setupServer = () => {
   });
 };
 
-// Експортуємо функцію
 module.exports = setupServer;

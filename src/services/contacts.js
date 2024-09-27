@@ -1,12 +1,12 @@
-const Contact = require('../models/contact'); // Імпортуємо модель
+const Contact = require('../models/contact'); 
 
 const getAllContacts = async () => {
-  return await Contact.find(); // Повертаємо всі контакти
+  return await Contact.find(); 
 };
 
-// Сервіс для отримання контакту за ID
+
 const getContactByIdService = async (contactId) => {
-  return await Contact.findById(contactId); // Знаходимо контакт за ID
+  return await Contact.findById(contactId); 
 };
 
 module.exports = {

@@ -15,10 +15,8 @@ async function importContacts() {
     await mongoose.connect(connectionString);
     console.log('Mongo connection successfully established!');
 
-    // Читання даних з contacts.json
     const contactsData = JSON.parse(fs.readFileSync('contacts.json', 'utf-8'));
 
-    // Імпорт контактів
     await Contact.insertMany(contactsData);
     console.log('Contacts imported successfully!');
   } catch (error) {
