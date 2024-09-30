@@ -6,7 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "inst":"node src/importContacts.js"
+    "inst": "node src/importContacts.js"
   },
   "keywords": [],
   "author": "Kate Radyvoniuk <radyvoniukkate@gmail.com>",
@@ -60,6 +60,7 @@
     "flatted": "^3.3.1",
     "glob-parent": "^6.0.2",
     "has-flag": "^4.0.0",
+    "http-errors": "^2.0.0",
     "ignore": "^5.3.2",
     "ignore-by-default": "^1.0.1",
     "import-fresh": "^3.3.0",
