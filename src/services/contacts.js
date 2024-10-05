@@ -1,13 +1,44 @@
-const Contact = require('../models/contact');
+const { Contact } = require('../models/contact'); 
 
-const getAllContacts = async () => {
-  try {
-    return await Contact.find();
-  } catch (error) {
-    console.error('Error fetching contacts:', error);
-    throw error; 
+const getAllContacts = async (
+  page,
+  perPage,
+  sortBy,
+  sortOrder,
+  type,
+  isFavourite
+) => {
+  const limit = parseInt(perPage, 10);
+  const skip = (page - 1) * limit;
+
+  const filter = {};
+  if (type) {
+    filter.contactType = type; 
   }
+  if (isFavourite) {
+    filter.isFavourite = isFavourite === 'true'; 
+  }
+
+  const totalItems = await Contact.countDocuments(filter); 
+
+  const contacts = await Contact.find(filter)
+    .sort({ [sortBy]: sortOrder === 'asc' ? 1 : -1 }) 
+    .skip(skip) 
+    .limit(limit);
+
+  const totalPages = Math.ceil(totalItems / limit);
+
+  return {
+    data: contacts,
+    page: parseInt(page, 10),
+    perPage: limit,
+    totalItems,
+    totalPages,
+    hasPreviousPage: page > 1,
+    hasNextPage: page < totalPages,
+  };
 };
+
 
 const createContact = async ({
   name,
@@ -25,11 +56,11 @@ const createContact = async ({
       contactType,
     });
 
-    await newContact.save(); 
-    return newContact; 
+    await newContact.save();
+    return newContact;
   } catch (error) {
     console.error('Error creating contact:', error);
-    throw error; 
+    throw error;
   }
 };
 
@@ -38,7 +69,7 @@ const getContactByIdService = async (contactId) => {
     return await Contact.findById(contactId);
   } catch (error) {
     console.error('Error fetching contact by ID:', error);
-    throw error; 
+    throw error;
   }
 };
 
@@ -51,19 +82,19 @@ const updateContact = async (contactId, updateData) => {
     );
 
     if (!updatedContact) {
-      throw new Error('Contact not found'); 
+      throw new Error('Contact not found');
     }
 
-    return updatedContact; 
+    return updatedContact;
   } catch (error) {
     console.error('Error updating contact:', error);
-    throw error; 
+    throw error;
   }
 };
 
 const deleteContact = async (contactId) => {
-  const deletedContact = await Contact.findByIdAndDelete(contactId); 
-  return deletedContact; 
+  const deletedContact = await Contact.findByIdAndDelete(contactId);
+  return deletedContact;
 };
 
 module.exports = {
@@ -71,5 +102,5 @@ module.exports = {
   getContactByIdService,
   createContact,
   updateContact,
-  deleteContact
+  deleteContact,
 };

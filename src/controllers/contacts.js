@@ -9,18 +9,33 @@ const httpErrors = require('http-errors');
 
 
 const getContacts = async (req, res) => {
+  const {
+    page = 1,
+    perPage = 10,
+    sortBy = 'name',
+    sortOrder = 'asc',
+    type, 
+    isFavourite,
+  } = req.query;
+
   try {
-    const contacts = await getAllContacts();
-    return res.status(200).json({
+    const contacts = await getAllContacts(
+      page,
+      perPage,
+      sortBy,
+      sortOrder,
+      type,
+      isFavourite
+    );
+    res.status(200).json({
       status: 200,
-      message: 'Successfully found contacts!',
+      message: "Successfully found contacts!",
       data: contacts,
     });
   } catch (error) {
-    console.error('Error fetching contacts:', error);
-    return res.status(500).json({
+    res.status(500).json({
       status: 500,
-      message: 'Error fetching contacts.',
+      message: "Error fetching contacts.",
       error: error.message,
     });
   }
