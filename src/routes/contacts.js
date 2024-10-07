@@ -11,8 +11,11 @@ const {
   contactCreationSchema,
   contactUpdateSchema,
 } = require('../models/contact');
+const authenticate = require('../middlewares/authenticate');
 
 const router = express.Router();
+
+router.use(authenticate);
 
 router.get('/', getContacts);
 router.get('/:contactId', isValidId, getContactById);

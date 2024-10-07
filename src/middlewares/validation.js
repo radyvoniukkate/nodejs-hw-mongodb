@@ -5,7 +5,7 @@ const httpErrors = require('http-errors');
 const validateBody = (schema) => {
   return (req, res, next) => {
     if (!schema || typeof schema.validate !== 'function') {
-      return next(httpErrors(500, 'Invalid Joi schema')); // Додана перевірка на наявність Joi-схеми
+      return next(httpErrors(500, 'Invalid Joi schema')); 
     }
 
     const { error } = schema.validate(req.body);
@@ -16,7 +16,6 @@ const validateBody = (schema) => {
   };
 };
 
-// Middleware to check if the contact ID is a valid MongoDB ObjectId
 const isValidId = (req, res, next) => {
   const { contactId } = req.params;
   if (!mongoose.Types.ObjectId.isValid(contactId)) {

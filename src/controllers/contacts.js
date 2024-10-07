@@ -2,11 +2,10 @@ const {
   getAllContacts,
   getContactByIdService,
   createContact: createNewContact,
-    updateContact: updContact,
-  deleteContact:dltContact
+  updateContact: updContact,
+  deleteContact: dltContact,
 } = require('../services/contacts');
 const httpErrors = require('http-errors');
-
 
 const getContacts = async (req, res) => {
   const {
@@ -14,12 +13,15 @@ const getContacts = async (req, res) => {
     perPage = 10,
     sortBy = 'name',
     sortOrder = 'asc',
-    type, 
+    type,
     isFavourite,
   } = req.query;
 
+  const userId = req.user._id; 
+
   try {
     const contacts = await getAllContacts(
+      userId, 
       page,
       perPage,
       sortBy,
@@ -29,13 +31,13 @@ const getContacts = async (req, res) => {
     );
     res.status(200).json({
       status: 200,
-      message: "Successfully found contacts!",
+      message: 'Successfully found contacts!',
       data: contacts,
     });
   } catch (error) {
     res.status(500).json({
       status: 500,
-      message: "Error fetching contacts.",
+      message: 'Error fetching contacts.',
       error: error.message,
     });
   }
@@ -43,14 +45,16 @@ const getContacts = async (req, res) => {
 
 const getContactById = async (req, res) => {
   const { contactId } = req.params;
+  const userId = req.user._id; 
+
   try {
-    const contact = await getContactByIdService(contactId);
+    const contact = await getContactByIdService(contactId, userId); 
 
     if (!contact) {
       return res.status(404).json({
         status: 404,
         message: 'Contact not found',
-        data:null,
+        data: null,
       });
     }
 
@@ -72,6 +76,7 @@ const getContactById = async (req, res) => {
 const createContact = async (req, res, next) => {
   try {
     const { name, phoneNumber, email, isFavourite, contactType } = req.body;
+    const userId = req.user._id; 
 
     const newContact = await createNewContact({
       name,
@@ -79,6 +84,7 @@ const createContact = async (req, res, next) => {
       email,
       isFavourite,
       contactType,
+      userId, 
     });
 
     res.status(201).json({
@@ -94,12 +100,13 @@ const createContact = async (req, res, next) => {
 const updateContact = async (req, res, next) => {
   const { contactId } = req.params;
   const updateData = req.body;
+  const userId = req.user._id; 
 
   try {
-    const updatedContact = await updContact(contactId, updateData);
+    const updatedContact = await updContact(contactId, userId, updateData); 
 
     if (!updatedContact) {
-      throw httpErrors(404, 'Contact not found'); 
+      throw httpErrors(404, 'Contact not found');
     }
 
     res.status(200).json({
@@ -114,12 +121,13 @@ const updateContact = async (req, res, next) => {
 
 const deleteContact = async (req, res, next) => {
   const { contactId } = req.params;
+  const userId = req.user._id; 
 
   try {
-    const deletedContact = await dltContact(contactId); 
+    const deletedContact = await dltContact(contactId, userId); 
 
     if (!deletedContact) {
-      throw httpErrors(404, 'Contact not found'); 
+      throw httpErrors(404, 'Contact not found');
     }
 
     res.status(204).send(); 
@@ -132,6 +140,6 @@ module.exports = {
   getContacts,
   getContactById,
   createContact,
-    updateContact,
-  deleteContact
+  updateContact,
+  deleteContact,
 };
