@@ -8,14 +8,18 @@ const registerValidationSchema = Joi.object({
 });
 
 const validateRegisterData = (req, res, next) => {
-  const { name, email, password } = req.body;
+  const { error } = registerValidationSchema.validate(req.body, {
+    abortEarly: false,
+  });
 
-  if (!name || !email || !password) {
-    return res.status(400).json({ message: 'All fields are required' });
+  if (error) {
+    const errorMessage = error.details
+      .map((detail) => detail.message)
+      .join(', ');
+    return next(createHttpError(400, errorMessage));
   }
 
   next();
 };
 
 module.exports = validateRegisterData;
-

@@ -11,7 +11,7 @@ const registerUserController = async (req, res, next) => {
     const newUser = await registerUser({ name, email, password });
 
     res.status(201).json({
-      status: 'success',
+      status: 201,
       message: 'Successfully registered a user!',
       data: {
         id: newUser._id,
@@ -67,7 +67,7 @@ const loginUser = async (req, res, next) => {
     });
 
     return res.status(200).json({
-      status: 'success',
+      status: 200,
       message: 'Successfully logged in a user!',
       data: { accessToken },
     });
@@ -86,7 +86,7 @@ const refreshAccessToken = async (req, res, next) => {
   try {
     const { accessToken } = await refreshTokenService(refreshToken);
     res.status(200).json({
-      status: 'success',
+      status: 200,
       message: 'Successfully refreshed a session!',
       data: { accessToken },
     });
