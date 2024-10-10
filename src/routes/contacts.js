@@ -12,14 +12,23 @@ const {
   contactUpdateSchema,
 } = require('../models/contact');
 const authenticate = require('../middlewares/authenticate');
+const uploadPhoto = require('../middlewares/upload');
 
 const router = express.Router();
 
 router.use(authenticate);
 
 router.get('/', getContacts);
+
 router.get('/:contactId', isValidId, getContactById);
-router.post('/', validateBody(contactCreationSchema), createContact);
+
+router.post(
+  '/',
+  uploadPhoto, 
+  validateBody(contactCreationSchema), 
+  createContact 
+);
+
 router.patch(
   '/:contactId',
   isValidId,

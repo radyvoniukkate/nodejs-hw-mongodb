@@ -1,4 +1,3 @@
-// src/server.js
 const express = require('express');
 const cors = require('cors');
 const pino = require('pino-http')();
@@ -7,12 +6,12 @@ const authRouter = require('./routes/auth');
 const notFoundHandler = require('./middlewares/notFoundHandler');
 const errorHandler = require('./middlewares/errorHandler');
 const cookieParser = require('cookie-parser');
-
+const bodyParser = require('body-parser');
 
 const setupServer = () => {
   const app = express();
   const PORT = process.env.PORT || 3000;
-
+  app.use(bodyParser.text({ type: '/' }));
   app.use(cors());
   app.use(pino);
   app.use(express.json());

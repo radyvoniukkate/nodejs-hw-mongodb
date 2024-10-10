@@ -18,6 +18,7 @@ const contactSchema = new mongoose.Schema(
       ref: 'User',
       required: true,
     },
+    photo: { type: String, default: null },
   },
   {
     timestamps: true,
@@ -28,12 +29,13 @@ const contactSchema = new mongoose.Schema(
 const contactCreationSchema = Joi.object({
   name: Joi.string().min(3).max(20).required(),
   phoneNumber: Joi.string().min(3).max(20).required(),
-  email: Joi.string().email().allow(null),
+  email: Joi.string().email().allow(null).required(),
   isFavourite: Joi.boolean(),
   contactType: Joi.string()
     .valid('work', 'home', 'personal')
     .default('personal')
     .required(),
+  photo: Joi.string().allow(null),
 });
 
 const contactUpdateSchema = Joi.object({
@@ -42,6 +44,7 @@ const contactUpdateSchema = Joi.object({
   email: Joi.string().email().allow(null),
   isFavourite: Joi.boolean(),
   contactType: Joi.string().valid('work', 'home', 'personal'),
+  photo: Joi.string().allow(null),
 });
 
 const Contact = mongoose.model('Contact', contactSchema);
