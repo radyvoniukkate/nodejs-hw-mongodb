@@ -40,6 +40,7 @@ requestBody:
           photo:
             type: string
             example: "/uploads/photo.jpg"
+            nullable: true
             description: "URL to the contact's photo (optional)."
 responses:
   '201':
