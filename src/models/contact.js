@@ -35,7 +35,7 @@ const contactCreationSchema = Joi.object({
     .valid('work', 'home', 'personal')
     .default('personal')
     .required(),
-  photo: Joi.string().allow(null),
+  photo: Joi.string().allow(null, ''),
 });
 
 const contactUpdateSchema = Joi.object({
@@ -44,7 +44,7 @@ const contactUpdateSchema = Joi.object({
   email: Joi.string().email().allow(null),
   isFavourite: Joi.boolean(),
   contactType: Joi.string().valid('work', 'home', 'personal'),
-  photo: Joi.string().allow(null),
+  photo: Joi.string().allow(null, ''),
 });
 
 const Contact = mongoose.model('Contact', contactSchema);
