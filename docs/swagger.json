@@ -66,10 +66,6 @@
                     "enum": ["work", "home", "personal"],
                     "example": "work"
                   },
-                  "userId": {
-                    "description": "Contact's parent id",
-                    "type": "string"
-                  },
                   "photo": {
                     "description": "Link to contact's photo",
                     "type": "string",
