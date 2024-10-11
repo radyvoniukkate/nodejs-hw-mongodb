@@ -1,0 +1,27 @@
+description: Created
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        - status
+        - message
+        - data
+      properties:
+        status:
+          type: integer
+          example: 201
+        message:
+          type: string
+          example: Successfully created the resource!
+        data:
+          type: object
+          example: {
+            "id": "5f8d0d55b54764421b7160e4",
+            "name": "John Doe",
+            "phoneNumber": "+123456789",
+            "email": "johndoe@example.com",
+            "isFavourite": true,
+            "contactType": "personal",
+            "photo": "/uploads/photo.jpg"
+          }

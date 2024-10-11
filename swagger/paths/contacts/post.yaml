@@ -1,0 +1,142 @@
+tags:
+  - Contacts
+summary: Create a new contact
+operationId: createContact
+description: 'Create a new contact for the authenticated user.'
+security:
+  - bearerAuth: []
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - name
+          - phoneNumber
+          - contactType
+        properties:
+          name:
+            type: string
+            example: "John Doe"
+            description: "Name of the contact."
+          phoneNumber:
+            type: string
+            example: "+123456789"
+            description: "Phone number of the contact."
+          email:
+            type: string
+            example: "johndoe@example.com"
+            description: "Email address of the contact (optional)."
+          isFavourite:
+            type: boolean
+            example: false
+            description: "Indicates if the contact is marked as favorite (optional)."
+          contactType:
+            type: string
+            enum: ['work', 'home', 'personal']
+            example: 'personal'
+            description: "The type of the contact (work, home, personal)."
+          photo:
+            type: string
+            example: "/uploads/photo.jpg"
+            description: "URL to the contact's photo (optional)."
+responses:
+  '201':
+    description: Successfully created the contact
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: "Successfully created the contact!"
+            data:
+              type: object
+              properties:
+                id:
+                  type: string
+                  example: "5f8d0d55b54764421b7160e4"
+                name:
+                  type: string
+                  example: "John Doe"
+                phoneNumber:
+                  type: string
+                  example: "+123456789"
+                email:
+                  type: string
+                  example: "johndoe@example.com"
+                isFavourite:
+                  type: boolean
+                  example: true
+                contactType:
+                  type: string
+                  example: "personal"
+                photo:
+                  type: string
+                  example: "/uploads/photo.jpg"
+                data:
+                  type: object
+                  $ref: '../../components/responses/201.yaml'
+  '400':
+    description: 'Invalid query parameters provided'
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 400
+            message:
+              type: string
+              example: 'Invalid query parameters'
+            error:
+              type: string
+              example: 'Query parameter "page" must be a number'
+            data:
+              type: object
+              $ref: '../../components/responses/400.yaml'
+  '401':
+    description: 'Unauthorized, authentication required'
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 401
+            message:
+              type: string
+              example: 'Unauthorized'
+            data:
+              type: object
+              $ref: '../../components/responses/401.yaml'
+  '500':
+    description: 'Internal server error'
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 500
+            message:
+              type: string
+              example: 'Internal server error'
+            error:
+              type: string
+              example: 'Error fetching contacts'
+            data:
+              type: object
+              $ref: '../../components/responses/500.yaml'

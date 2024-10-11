@@ -1,0 +1,49 @@
+type: object
+required:
+  - id
+  - name
+  - phoneNumber
+  - contactType
+  - userId
+properties:
+  id:
+    type: string
+    description: Unique identifier for the contact
+    example: "5f8d0d55b54764421b7160e4"
+  name:
+    type: string
+    description: Full name of the contact
+    example: "John Doe"
+  phoneNumber:
+    type: string
+    description: Phone number of the contact
+    example: "+123456789"
+  email:
+    type: string
+    description: Email address of the contact (optional)
+    example: "johndoe@example.com"
+    nullable: true
+  isFavourite:
+    type: boolean
+    description: Indicates if the contact is marked as favorite (optional)
+    example: true
+  contactType:
+    type: string
+    description: Type of the contact (work, home, personal)
+    enum: ['work', 'home', 'personal']
+    example: "personal"
+  photo:
+    type: string
+    description: URL to the contact's photo (optional)
+    example: "/uploads/photo.jpg"
+    nullable: true
+  createdAt:
+    type: string
+    format: date-time
+    description: Date and time when the contact was created
+    example: "2024-10-11T09:55:22Z"
+  updatedAt:
+    type: string
+    format: date-time
+    description: Date and time when the contact was last updated
+    example: "2024-10-11T10:55:22Z"

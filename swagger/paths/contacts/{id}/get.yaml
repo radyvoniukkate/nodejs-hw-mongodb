@@ -1,0 +1,75 @@
+tags:
+  - Contacts
+summary: Get contact by ID
+operationId: getContactById
+description: Retrieve contact information by its ID. Requires Bearer token authentication.
+security:
+  - bearerAuth: []
+parameters:
+  - name: contactId
+    in: path
+    required: true
+    description: Unique identifier for the contact
+    schema:
+      type: string
+      example: '6708e43f19c074eec475ddf1'
+
+responses:
+  '200':
+    description: Successfully retrieved the contact
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully found contact with id 60b6cdd12345f8a9c92b4e67!
+            data:
+              type: object
+              $ref: '../../../components/responses/200.yaml'
+  '404':
+    description: Contact not found
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+              type: integer
+              example: 404
+            message:
+              type: string
+              example: Contact not found
+            data:
+              type: object
+              $ref: '../../../components/responses/404.yaml'
+  '500':
+    description: Internal server error
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+              type: integer
+              example: 500
+            message:
+              type: string
+              example: Error fetching contact
+            data:
+              type: object
+              $ref: '../../../components/responses/500.yaml'

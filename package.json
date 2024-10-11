@@ -6,13 +6,17 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "inst": "node src/importContacts.js"
+    "inst": "node src/importContacts.js",
+    "build": "npm run build-docs",
+    "build-docs": "redocly bundle --ext json -o docs/swagger.json",
+    "preview-docs": "redocly preview-docs"
   },
   "keywords": [],
   "author": "Kate Radyvoniuk <radyvoniukkate@gmail.com>",
   "license": "ISC",
   "devDependencies": {
     "@eslint/js": "^9.9.1",
+    "@redocly/cli": "^1.25.5",
     "eslint": "^9.9.1",
     "globals": "^15.9.0",
     "nodemon": "^3.1.7"
@@ -95,6 +99,7 @@
     "natural-compare": "^1.4.0",
     "nodemailer": "^6.9.15",
     "normalize-path": "^3.0.0",
+    "openapi": "^1.0.1",
     "optionator": "^0.9.4",
     "p-limit": "^3.1.0",
     "p-locate": "^5.0.0",
@@ -119,6 +124,9 @@
     "strip-ansi": "^6.0.1",
     "strip-json-comments": "^3.1.1",
     "supports-color": "^7.2.0",
+    "swagger": "^0.7.5",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "text-table": "^0.2.0",
     "to-regex-range": "^5.0.1",
     "touch": "^3.1.1",

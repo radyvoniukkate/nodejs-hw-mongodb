@@ -1,0 +1,150 @@
+tags:
+  - Contacts
+summary: Get list of contacts
+operationId: getContacts
+description: 'Get list of contacts for the authenticated user with optional filters.'
+security:
+  - bearerAuth: []
+parameters:
+  - in: query
+    name: page
+    schema:
+      type: integer
+      example: 1
+    description: "The page number to retrieve. Default is 1."
+  - in: query
+    name: perPage
+    schema:
+      type: integer
+      example: 10
+    description: "Number of contacts per page. Default is 10."
+  - in: query
+    name: sortBy
+    schema:
+      type: string
+      example: 'name'
+    description: "Field by which to sort the contacts. Default is 'name'."
+  - in: query
+    name: sortOrder
+    schema:
+      type: string
+      enum: ['asc', 'desc']
+      example: 'asc'
+    description: "Sort order: 'asc' for ascending or 'desc' for descending. Default is 'asc'."
+  - in: query
+    name: type
+    schema:
+      type: string
+      enum: ['work', 'home', 'personal']
+      description: "Filter by contact type."
+  - in: query
+    name: isFavourite
+    schema:
+      type: boolean
+      example: true
+    description: "Filter by favourite contacts."
+responses:
+  '200':
+    description: Successfully retrieved contacts!
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully found contacts!
+            data:
+              type: object
+              required:
+                - data
+                - page
+                - perPage
+                - totalItems
+                - totalPages
+                - hasNextPage
+                - hasPreviousPage
+              properties:
+                data:
+                  type: array
+                  items:
+                    $ref: '../../components/schemas/contact.yaml'
+                page:
+                  type: number
+                  example: 1
+                perPage:
+                  type: number
+                  example: 10
+                totalItems:
+                  type: number
+                  example: 50
+                totalPages:
+                  type: number
+                  example: 5
+                hasNextPage:
+                  type: boolean
+                  example: true
+                hasPreviousPage:
+                  type: boolean
+                  example: false
+  '400':
+    description: 'Invalid query parameters provided'
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 400
+            message:
+              type: string
+              example: 'Invalid query parameters'
+            error:
+              type: string
+              example: 'Query parameter "page" must be a number'
+            data:
+              type: object
+              $ref: '../../components/responses/400.yaml'
+  '401':
+    description: 'Unauthorized, authentication required'
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 401
+            message:
+              type: string
+              example: 'Unauthorized'
+            data:
+              type: object
+              $ref: '../../components/responses/401.yaml'
+  '500':
+    description: 'Internal server error'
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 500
+            message:
+              type: string
+              example: 'Internal server error'
+            error:
+              type: string
+              example: 'Error fetching contacts'
+            data:
+              type: object
+              $ref: '../../components/responses/500.yaml'

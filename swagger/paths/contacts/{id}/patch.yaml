@@ -1,0 +1,134 @@
+tags:
+  - Contacts
+summary: Update partial information of a contact
+operationId: updatePartialContact
+description: 'Update partial information of an existing contact for the authenticated user.'
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: contactId
+    required: true
+    description: The ID of the contact to update
+    schema:
+      type: string
+      example: '5f8d0d55b54764421b7160e4'
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          name:
+            type: string
+            example: "John Doe"
+          phoneNumber:
+            type: string
+            example: "+123456789"
+          email:
+            type: string
+            example: "johndoe@example.com"
+          isFavourite:
+            type: boolean
+            example: false
+          contactType:
+            type: string
+            enum: ['work', 'home', 'personal']
+            example: 'work'
+          photo:
+            type: string
+            example: "/uploads/photo.jpg"
+responses:
+  '200':
+    description: Successfully updated the contact!
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully updated the contact!
+            data:
+              $ref: '../../../components/schemas/contact.yaml'
+  '400':
+    description: 'Invalid query parameters provided'
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 400
+            message:
+              type: string
+              example: 'Invalid query parameters'
+            error:
+              type: string
+              example: 'Query parameter "page" must be a number'
+            data:
+              type: object
+              $ref: '../../../components/responses/400.yaml'
+  '401':
+    description: 'Unauthorized, authentication required'
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 401
+            message:
+              type: string
+              example: 'Unauthorized'
+            data:
+              type: object
+              $ref: '../../../components/responses/401.yaml'
+  '404':
+    description: Contact not found
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+              type: integer
+              example: 404
+            message:
+              type: string
+              example: Contact with id 5f8d0d55b54764421b7160e4 not found
+            data:
+              type: object
+              $ref: '../../../components/responses/404.yaml'
+  '500':
+    description: Internal server error
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+              type: integer
+              example: 500
+            message:
+              type: string
+              example: Error fetching contact
+            data:
+              type: object
+              $ref: '../../../components/responses/500.yaml'
